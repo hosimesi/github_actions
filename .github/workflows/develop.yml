@@ -13,23 +13,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      name: checkout
-      uses: actions/checkout@v2
+      - name: checkout
+      - uses: actions/checkout@v2
 
       # Step-1 credentialsのfetch
-      name: fetch credential
-      run:
-        bash ./fetchCredentials.sh
+      # name: fetch credential
+      # run:
+      #   bash ./fetchCredentials.sh
 
       # Step-2 docker containerの立ち上げ
-      name: docker compose up
-      run:
+      - name: docker compose up
+        run:
           docker compose up
-        # bash ./docker/dockerComposeUp.sh -d dev
 
-      # fastapiコンテナから実行
-      name: action
-      run: |
-        docker exec -t github-actions bash lint.sh
+      # github-actionsコンテナから実行
+      - name: action
+        run: docker exec -t github-actions bash lint.sh
