@@ -1,2 +1,3 @@
-.mypy_chache
-.pychache
+.mypy_chache/
+__pycache__/
+.pytest_cache/

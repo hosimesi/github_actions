@@ -1,0 +1,35 @@
+name: develop
+
+# どのタイミングでactionを走らせるか
+on:
+  # mainとdevにpushかPRが来た時に起動
+  # mergeするタイミングでやる方がjob回数を減らせて，料金的にはいいかも
+  push:
+    branches: dev
+  pull_request:
+    # types: [opened, synchronize]
+    branches: dev
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      name: checkout
+      uses: actions/checkout@v2
+
+      # Step-1 credentialsのfetch
+      name: fetch credential
+      run:
+        bash ./fetchCredentials.sh
+
+      # Step-2 docker containerの立ち上げ
+      name: docker compose up
+      run:
+          docker compose up
+        # bash ./docker/dockerComposeUp.sh -d dev
+
+      # fastapiコンテナから実行
+      name: action
+      run: |
+        docker exec -t github-actions bash lint.sh

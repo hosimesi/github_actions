@@ -1,0 +1,11 @@
+name: production
+
+# どのタイミングでactionを走らせるか
+on:
+  # mainとdevにpushかPRが来た時に起動
+  # mergeするタイミングでやる方がjob回数を減らせて，料金的にはいいかも
+  push:
+    branches: dev
+  pull_request:
+    # types: [opened, synchronize]
+    branches: dev
